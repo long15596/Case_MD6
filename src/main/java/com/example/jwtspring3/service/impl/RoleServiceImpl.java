@@ -6,6 +6,8 @@ import com.example.jwtspring3.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class RoleServiceImpl implements RoleService {
     @Autowired
@@ -26,5 +28,8 @@ roleRepository.save(role);
         return roleRepository.findByName(name);
     }
 
-
+    @Override
+    public Role findById(Long id) {
+        return roleRepository.findRoleById(id);
+    }
 }
