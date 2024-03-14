@@ -3,6 +3,7 @@ package com.example.jwtspring3.controller;
 import com.example.jwtspring3.model.JwtResponse;
 import com.example.jwtspring3.model.Role;
 import com.example.jwtspring3.model.User;
+import com.example.jwtspring3.repository.UserRepository;
 import com.example.jwtspring3.service.RoleService;
 import com.example.jwtspring3.service.UserService;
 import com.example.jwtspring3.service.impl.JwtService;
@@ -40,18 +41,30 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/users")
     public ResponseEntity<Iterable<User>> showAllUser() {
         Iterable<User> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
-    @GetMapping("/admin/users")
-    public ResponseEntity<Iterable<User>> showAllUserByAdmin() {
-        Iterable<User> users = userService.findAll();
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getProfile(@PathVariable Long id) {
+        Optional<User> userOptional = this.userService.findById(id);
+        return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/admin/owner")
+    public ResponseEntity<Iterable<User>> showAllOwner() {
+        Iterable<User> users = userService.findAllUser("ROLE_OWNER");
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    @GetMapping("/admin/user")
+    public ResponseEntity<Iterable<User>> showAllUsers(){
+        Iterable<User> users = userService.findAllUser("ROLE_USER");
+        return new ResponseEntity<>(users,HttpStatus.OK);
+     }
 
     @PostMapping("/register/{roleId}")
     public ResponseEntity createUser(@RequestBody User user,@PathVariable Long roleId, BindingResult bindingResult) {
@@ -89,16 +102,7 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
-    @GetMapping("/hello")
-    public ResponseEntity<String> hello() {
-        return new ResponseEntity("Hello World", HttpStatus.OK);
-    }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<User> getProfile(@PathVariable Long id) {
-        Optional<User> userOptional = this.userService.findById(id);
-        return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUserProfile(@PathVariable Long id, @RequestBody User user) {
