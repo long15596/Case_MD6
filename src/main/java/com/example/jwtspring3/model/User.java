@@ -1,9 +1,10 @@
 package com.example.jwtspring3.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -14,14 +15,22 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Pattern(regexp = "[A-Za-z]+", message = "Tên chỉ có thể chứa các ký tự chữ cái")
+    private String name;
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
-
     @Column(nullable = false)
     private String confirmPassword;
+    @Column(length = 1000)
+    private String avatar;
+    @Pattern(regexp = "^[0-9]*$")
+    @Size(min = 6, max = 32, message = "Từ 6 đến 32 số")
+    @Pattern(regexp = "^[0-9]*$", message = "Chỉ nhập số")
+    private String phone;
+    private String address;
+    private String status;
     private boolean enabled = true;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -94,5 +103,44 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

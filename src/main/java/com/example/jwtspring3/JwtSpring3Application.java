@@ -20,8 +20,10 @@ public class JwtSpring3Application implements CommandLineRunner {
 		if (roleRepository.count() == 0) {
 			Role admin = new Role("ROLE_ADMIN");
 			Role user = new Role("ROLE_USER");
+			Role owner = new Role("ROLE_OWNER");
 			roleRepository.save(admin);
 			roleRepository.save(user);
+			roleRepository.save(owner);
 		}
 	}
 }

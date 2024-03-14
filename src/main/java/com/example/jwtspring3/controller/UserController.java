@@ -53,8 +53,8 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity createUser(@RequestBody User user, BindingResult bindingResult) {
+    @PostMapping("/register/{roleId}")
+    public ResponseEntity createUser(@RequestBody User user,@PathVariable Long roleId, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -67,16 +67,11 @@ public class UserController {
         if (!userService.isCorrectConfirmPassword(user)) {
             return new ResponseEntity<>("Input confirm password",HttpStatus.OK);
         }
-        if (user.getRoles() != null) {
-            Role role = roleService.findByName("ROLE_ADMIN");
+        if (user.getRoles() == null) {
+            Role role = roleService.findById(roleId);
             Set<Role> roles = new HashSet<>();
             roles.add(role);
             user.setRoles(roles);
-        } else {
-            Role role1 = roleService.findByName("ROLE_USER");
-            Set<Role> roles1 = new HashSet<>();
-            roles1.add(role1);
-            user.setRoles(roles1);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
