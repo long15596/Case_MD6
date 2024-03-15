@@ -54,13 +54,13 @@ public class UserController {
         Optional<User> userOptional = this.userService.findById(id);
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping("/admin/owner")
+    @GetMapping("/admin/owners ")
     public ResponseEntity<Iterable<User>> showAllOwner() {
         Iterable<User> users = userService.findAllUser("ROLE_OWNER");
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/admin/user")
+    @GetMapping("/admin/users")
     public ResponseEntity<Iterable<User>> showAllUsers(){
         Iterable<User> users = userService.findAllUser("ROLE_USER");
         return new ResponseEntity<>(users,HttpStatus.OK);
