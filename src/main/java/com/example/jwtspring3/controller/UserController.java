@@ -54,7 +54,7 @@ public class UserController {
         Optional<User> userOptional = this.userService.findById(id);
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping("/admin/owners ")
+    @GetMapping("/admin/owners")
     public ResponseEntity<Iterable<User>> showAllOwner() {
         Iterable<User> users = userService.findAllUser("ROLE_OWNER");
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -101,8 +101,6 @@ public class UserController {
         User currentUser = userService.findByUsername(user.getUsername());
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
     }
-
-
 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUserProfile(@PathVariable Long id, @RequestBody User user) {
