@@ -51,14 +51,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<User> search(String name, String username) {
-        if (name != null && username != null) {
-            return userRepository.findByNameContainingAndStatusContaining(name, username);
+    public Iterable<User> search(String name, String username,String status) {
+        if (name != null && status != null && username != null) {
+            return userRepository.findByNameContainingAndStatusContainingAndUsernameContaining(name, status, username);
+        } else if (name != null && username != null) {
+            return userRepository.findByNameContainingAndUsernameContaining(name, username);
+        } else if (status != null && username != null) {
+            return userRepository.findByStatusContainingAndUsernameContaining(status, username);
+        } else if (name != null && status != null) {
+            return userRepository.findByNameContainingAndStatusContaining(name, status);
         } else if (name != null) {
             return userRepository.findByNameContaining(name);
+        } else if (status != null) {
+            return userRepository.findByStatusContaining(status);
         } else if (username != null) {
-            return userRepository.findByStatusContaining(username);
-        } else {
+            return userRepository.findByUsernameContaining(username);
+        }else {
             return findAll();
         }
     }

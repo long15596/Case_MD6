@@ -45,8 +45,8 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/users")
-    public ResponseEntity<Iterable<User>> showAllUser(String name,String username) {
-        Iterable<User> allUsers = userService.search(name,username);
+    public ResponseEntity<Iterable<User>> showAllUser(String name,String username,String status) {
+        Iterable<User> allUsers = userService.search(name,username,status);
             return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 

@@ -11,7 +11,8 @@ public interface UserService extends UserDetailsService {
     void save(User user);
 
     Iterable<User> findAll();
-    Iterable<User> search(String name, String status);
+
+    Iterable<User> search(String name, String username, String status);
 
     Iterable<User> findAllUser(String roleName);
 
