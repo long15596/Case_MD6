@@ -44,9 +44,23 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+
     @Override
     public Iterable<User> findAll() {
-        return userRepository.findAll();
+        return userRepository.findByRolesNameNot("ROLE_ADMIN");
+    }
+
+    @Override
+    public Iterable<User> search(String name, String username) {
+        if (name != null && username != null) {
+            return userRepository.findByNameContainingAndStatusContaining(name, username);
+        } else if (name != null) {
+            return userRepository.findByNameContaining(name);
+        } else if (username != null) {
+            return userRepository.findByStatusContaining(username);
+        } else {
+            return findAll();
+        }
     }
 
     @Override
@@ -117,4 +131,5 @@ public class UserServiceImpl implements UserService {
     public boolean isCorrectConfirmPassword(User user) {
         return user.getPassword().equals(user.getConfirmPassword());
     }
+
 }

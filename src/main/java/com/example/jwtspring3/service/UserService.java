@@ -11,6 +11,7 @@ public interface UserService extends UserDetailsService {
     void save(User user);
 
     Iterable<User> findAll();
+    Iterable<User> search(String name, String status);
 
     Iterable<User> findAllUser(String roleName);
 
@@ -27,4 +28,5 @@ public interface UserService extends UserDetailsService {
     boolean isRegister(User user);
 
     boolean isCorrectConfirmPassword(User user);
+
 }
