@@ -45,10 +45,11 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/users")
-    public ResponseEntity<Iterable<User>> showAllUser() {
-        Iterable<User> users = userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<Iterable<User>> showAllUser(String name,String username) {
+        Iterable<User> allUsers = userService.search(name,username);
+            return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
+
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getProfile(@PathVariable Long id) {
         Optional<User> userOptional = this.userService.findById(id);
