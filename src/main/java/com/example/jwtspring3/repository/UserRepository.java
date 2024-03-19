@@ -6,10 +6,10 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
-    List<User> findAllByRolesName(String roleName);
-    List<User> findByNameContainingAndRolesNameNot(String name, String roleName);
+    Iterable<User> findAllByRolesName(String roleName);
+    Iterable<User> findByNameContainingAndRolesNameNot(String name, String roleName);
     Iterable<User> findByUsernameContainingAndRolesNameNot(String username, String roleName);
-    List<User> findByStatusAndRolesNameNot(String status, String roleName);;
+    Iterable<User> findByStatusAndRolesNameNot(String status, String roleName);;
     Iterable<User>findByNameContainingAndUsernameContainingAndRolesNameNot(String name, String username, String roleName);
     Iterable<User> findByRolesNameNot(String roleAdmin);
 }
