@@ -45,8 +45,8 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/users")
-    public ResponseEntity<Iterable<User>> showAllUser(String name,String username) {
-        Iterable<User> allUsers = userService.search(name,username);
+    public ResponseEntity<Iterable<User>> showAllUser() {
+        Iterable<User> allUsers = userService.findAll();
             return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
@@ -55,15 +55,10 @@ public class UserController {
         Optional<User> userOptional = this.userService.findById(id);
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-//    @GetMapping("/admin/owners")
-//    public ResponseEntity<Iterable<User>> showAllOwner() {
-//        Iterable<User> users = userService.findAllUser("ROLE_OWNER");
-//        return new ResponseEntity<>(users, HttpStatus.OK);
-//    }
 
     @GetMapping("/admin/users")
-    public ResponseEntity<Iterable<User>> showAllUsers(){
-        Iterable<User> users = userService.findAllUser("ROLE_USER");
+    public ResponseEntity<Iterable<User>> showAllUsers(String name, String username, String status, String roleName){
+        Iterable<User> users = userService.findAllUser(name, username, status, roleName);
         return new ResponseEntity<>(users,HttpStatus.OK);
      }
 

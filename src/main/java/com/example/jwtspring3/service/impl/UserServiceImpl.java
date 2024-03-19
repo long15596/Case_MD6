@@ -44,28 +44,25 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-
     @Override
     public Iterable<User> findAll() {
         return userRepository.findByRolesNameNot("ROLE_ADMIN");
     }
 
     @Override
-    public Iterable<User> search(String name, String username) {
+    public Iterable<User> findAllUser(String roleName, String username, String name, String status) {
         if (name != null && username != null) {
-            return userRepository.findByNameContainingAndStatusContaining(name, username);
+            return userRepository.findByNameContainingAndUsernameContainingAndRolesNameNot(name,username, "ROLE_ADMIN");
         } else if (name != null) {
-            return userRepository.findByNameContaining(name);
+            return userRepository.findByNameContainingAndRolesNameNot(name, "ROLE_ADMIN");
         } else if (username != null) {
-            return userRepository.findByStatusContaining(username);
-        } else {
-            return findAll();
+            return userRepository.findByUsernameContainingAndRolesNameNot(username, "ROLE_ADMIN");
+        } else if (status != null) {
+            return userRepository.findByStatusAndRolesNameNot(status, "ROLE_ADMIN");
+        } else if (roleName != null) {
+            return userRepository.findAllByRolesName(roleName);
         }
-    }
-
-    @Override
-    public Iterable<User> findAllUser(String roleName) {
-        return userRepository.findAllByRolesName(roleName);
+        return userRepository.findByRolesNameNot("ROLE_ADMIN");
     }
 
     @Override
