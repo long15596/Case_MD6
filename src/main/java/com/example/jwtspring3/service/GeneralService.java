@@ -2,9 +2,9 @@ package com.example.jwtspring3.service;
 
 import java.util.Optional;
 
-public interface GeneralService<O> {
-    void save(O o);
+public interface GeneralService<Object> {
+    void save(Object object);
     void delete(Long id);
-    Iterable<O> findAll();
-    Optional<O> findById(Long id);
+    Iterable<Object> findAll();
+    Optional<Object> findById(Long id);
 }
