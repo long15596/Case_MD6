@@ -14,7 +14,6 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Pattern(regexp = "[A-Za-z]+", message = "Tên chỉ có thể chứa các ký tự chữ cái")
     private String name;
     @Column(unique = true, nullable = false)
     private String username;
@@ -24,9 +23,6 @@ public class User implements Serializable {
     private String confirmPassword;
     @Column(length = 1000)
     private String avatar;
-    @Pattern(regexp = "^[0-9]*$")
-    @Size(min = 6, max = 32, message = "Từ 6 đến 32 số")
-    @Pattern(regexp = "^[0-9]*$", message = "Chỉ nhập số")
     private String phone;
     private String address;
     private String status;
