@@ -34,27 +34,27 @@ public class PropertyServiceImpl implements IPropertyService {
     @Override
     public Iterable<Property> findAll(String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
         if (name != null &&  categoryName != null && locationName != null) {
-            propertyRepository.findByNameContainingAndCategoryNameAndLocationName(name, categoryName, locationName);
+            return propertyRepository.findByNameContainingAndCategoryNameAndLocationName(name, categoryName, locationName);
         } else if (name != null && categoryName != null) {
-            propertyRepository.findByNameContainingAndCategoryName(name, categoryName);
+            return propertyRepository.findByNameContainingAndCategoryName(name, categoryName);
         } else if (name != null && locationName != null) {
-            propertyRepository.findByNameContainingAndLocationName(name, locationName);
+            return propertyRepository.findByNameContainingAndLocationName(name, locationName);
         } else if (categoryName != null && locationName != null) {
-            propertyRepository.findByCategoryNameAndLocationName(categoryName, locationName);
+            return propertyRepository.findByCategoryNameAndLocationName(categoryName, locationName);
         } else if (name != null) {
-            propertyRepository.findAllByNameContaining(name);
+            return propertyRepository.findAllByNameContaining(name);
         } else if (categoryName != null) {
-            propertyRepository.findAllByCategoryName(categoryName);
+            return propertyRepository.findAllByCategoryName(categoryName);
         } else if (locationName != null) {
-            propertyRepository.findAllByLocationName(locationName);
-        } else if (priceStart != -1 && priceEnd != -1) {
-            propertyRepository.findAllByPriceBetween(priceStart, priceEnd);
-        } else if (bathroomStart != -1 && bathroomEnd != -1) {
-            propertyRepository.findAllByBathroomBetween(bathroomStart, bathroomEnd);
-        } else if (bedroomStar != -1 && bedroomEnd != -1) {
-            propertyRepository.findAllByBedroomBetween(bedroomStar, bedroomEnd);
-        } else if (livingRoomStart != -1 && livingRoomEnd != -1) {
-            propertyRepository.findByLivingRoomBetween(livingRoomStart, livingRoomEnd);
+            return propertyRepository.findAllByLocationName(locationName);
+        } else if (priceStart != null && priceEnd != null) {
+            return propertyRepository.findAllByPriceBetween(priceStart, priceEnd);
+        } else if (bathroomStart != null && bathroomEnd != null) {
+            return propertyRepository.findAllByBathroomBetween(bathroomStart, bathroomEnd);
+        } else if (bedroomStar != null && bedroomEnd != null) {
+            return propertyRepository.findAllByBedroomBetween(bedroomStar, bedroomEnd);
+        } else if (livingRoomStart != null && livingRoomEnd != null) {
+            return propertyRepository.findByLivingRoomBetween(livingRoomStart, livingRoomEnd);
         }
         return propertyRepository.findAll();
     }
