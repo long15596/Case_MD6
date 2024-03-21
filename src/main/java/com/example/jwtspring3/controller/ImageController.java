@@ -14,8 +14,8 @@ public class ImageController {
     @Autowired
     IImageService iImageService;
     @GetMapping
-    public ResponseEntity<Iterable<Image>> findAll() {
-        return new ResponseEntity<>(iImageService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Iterable<Image>> findAll(Long propertyId) {
+        return new ResponseEntity<>(iImageService.findAll(propertyId), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Image> save(@RequestBody Image image) {

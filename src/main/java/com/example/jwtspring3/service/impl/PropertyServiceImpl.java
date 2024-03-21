@@ -1,5 +1,6 @@
 package com.example.jwtspring3.service.impl;
 
+import com.example.jwtspring3.model.Image;
 import com.example.jwtspring3.model.Property;
 import com.example.jwtspring3.repository.PropertyRepository;
 import com.example.jwtspring3.service.IPropertyService;
@@ -12,6 +13,8 @@ import java.util.Optional;
 public class PropertyServiceImpl implements IPropertyService {
     @Autowired
     PropertyRepository propertyRepository;
+    @Autowired
+    IImageServiceImpl iImageService;
     @Override
     public void save(Property object) {
         propertyRepository.save(object);
@@ -19,6 +22,8 @@ public class PropertyServiceImpl implements IPropertyService {
 
     @Override
     public void delete(Long id) {
+        Iterable<Image> imageIterable = iImageService.findAllByPropertyId(id);
+        iImageService.deleteAll(imageIterable);
         propertyRepository.deleteById(id);
     }
 
