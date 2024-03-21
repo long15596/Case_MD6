@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/Images")
+@RequestMapping("/images")
 public class ImageController {
     @Autowired
     IImageService iImageService;
