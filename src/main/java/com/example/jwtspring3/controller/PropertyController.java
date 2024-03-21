@@ -14,8 +14,8 @@ public class PropertyController {
     @Autowired
     IPropertyService iPropertyService;
     @GetMapping
-    public ResponseEntity<Iterable<Property>> findAll() {
-        return new ResponseEntity<>(iPropertyService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Iterable<Property>> findAll(String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
+        return new ResponseEntity<>(iPropertyService.findAll(name, categoryName, locationName, priceStart, priceEnd, bedroomStar, bedroomEnd, bathroomStart, bathroomEnd, livingRoomStart, livingRoomEnd), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Property> save(@RequestBody Property property) {

@@ -28,7 +28,7 @@ public class IImageServiceImpl implements IImageService {
 
     @Override
     public Iterable<Image> findAll(Long id) {
-        if(id != -1) {
+        if(id != null) {
             return imageRepository.findByPropertyId(id);
         }
         return imageRepository.findAll();

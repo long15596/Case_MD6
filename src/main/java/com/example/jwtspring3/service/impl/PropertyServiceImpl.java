@@ -31,9 +31,37 @@ public class PropertyServiceImpl implements IPropertyService {
     public Iterable<Property> findAll() {
         return propertyRepository.findAll();
     }
-
+    @Override
+    public Iterable<Property> findAll(String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
+        if (name != null &&  categoryName != null && locationName != null) {
+            propertyRepository.findByNameContainingAndCategoryNameAndLocationName(name, categoryName, locationName);
+        } else if (name != null && categoryName != null) {
+            propertyRepository.findByNameContainingAndCategoryName(name, categoryName);
+        } else if (name != null && locationName != null) {
+            propertyRepository.findByNameContainingAndLocationName(name, locationName);
+        } else if (categoryName != null && locationName != null) {
+            propertyRepository.findByCategoryNameAndLocationName(categoryName, locationName);
+        } else if (name != null) {
+            propertyRepository.findAllByNameContaining(name);
+        } else if (categoryName != null) {
+            propertyRepository.findAllByCategoryName(categoryName);
+        } else if (locationName != null) {
+            propertyRepository.findAllByLocationName(locationName);
+        } else if (priceStart != -1 && priceEnd != -1) {
+            propertyRepository.findAllByPriceBetween(priceStart, priceEnd);
+        } else if (bathroomStart != -1 && bathroomEnd != -1) {
+            propertyRepository.findAllByBathroomBetween(bathroomStart, bathroomEnd);
+        } else if (bedroomStar != -1 && bedroomEnd != -1) {
+            propertyRepository.findAllByBedroomBetween(bedroomStar, bedroomEnd);
+        } else if (livingRoomStart != -1 && livingRoomEnd != -1) {
+            propertyRepository.findByLivingRoomBetween(livingRoomStart, livingRoomEnd);
+        }
+        return propertyRepository.findAll();
+    }
     @Override
     public Optional<Property> findById(Long id) {
         return propertyRepository.findById(id);
     }
+
+
 }
