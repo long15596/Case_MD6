@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     public Iterable<User> findAllUser(String roleName, String username, String name, String status) {
         if (name != null && username != null) {
             return userRepository.findByNameContainingAndUsernameContainingAndRolesNameNot(name,username, "ROLE_ADMIN");
-        } else if (name != null) {
+        } else if (name != null && roleName == null && status == null) {
             return userRepository.findByNameContainingAndRolesNameNot(name, "ROLE_ADMIN");
         } else if (username != null) {
             return userRepository.findByUsernameContainingAndRolesNameNot(username, "ROLE_ADMIN");
