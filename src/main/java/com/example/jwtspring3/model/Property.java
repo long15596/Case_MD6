@@ -14,6 +14,8 @@ public class Property {
     private Long livingRoom;
     private Long kitchen;
     private Long successRental;
+    @Column(length = 1000)
+    private String information;
     @ManyToOne
     private Category category;
     @ManyToOne
@@ -111,5 +113,13 @@ public class Property {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
     }
 }
