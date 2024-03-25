@@ -17,6 +17,7 @@ public class User implements Serializable {
     private String name;
     @Column(unique = true, nullable = false)
     private String username;
+    private String mail;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -137,5 +138,13 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }
