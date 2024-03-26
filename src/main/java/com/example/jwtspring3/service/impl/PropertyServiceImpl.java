@@ -16,8 +16,8 @@ public class PropertyServiceImpl implements IPropertyService {
     @Autowired
     IImageServiceImpl iImageService;
     @Override
-    public void save(Property object) {
-        propertyRepository.save(object);
+    public Property save(Property object) {
+       return propertyRepository.save(object);
     }
 
     @Override

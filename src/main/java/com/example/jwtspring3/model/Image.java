@@ -1,8 +1,11 @@
 package com.example.jwtspring3.model;
 
 import jakarta.persistence.*;
-
+import lombok.Getter;
+import lombok.Setter;
 @Entity
+@Setter
+@Getter
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,27 +18,4 @@ public class Image {
     public Image() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
-    }
-
-    public Property getProperty() {
-        return property;
-    }
-
-    public void setProperty(Property property) {
-        this.property = property;
-    }
 }

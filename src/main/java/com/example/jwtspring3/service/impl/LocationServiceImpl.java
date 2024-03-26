@@ -13,8 +13,8 @@ public class LocationServiceImpl implements ILocationService {
     @Autowired
     LocationRepository locationRepository;
     @Override
-    public void save(Location object) {
-        locationRepository.save(object);
+    public Location save(Location object) {
+       return locationRepository.save(object);
     }
 
     @Override

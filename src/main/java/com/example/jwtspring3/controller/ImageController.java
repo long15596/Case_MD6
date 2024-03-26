@@ -19,8 +19,7 @@ public class ImageController {
     }
     @PostMapping
     public ResponseEntity<Image> save(@RequestBody Image image) {
-        iImageService.save(image);
-        return new ResponseEntity<>(image, HttpStatus.CREATED);
+        return new ResponseEntity<>(iImageService.save(image), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Image> update(@PathVariable Long id, @RequestBody Image image) {

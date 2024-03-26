@@ -19,8 +19,7 @@ public class PropertyController {
     }
     @PostMapping
     public ResponseEntity<Property> save(@RequestBody Property property) {
-        iPropertyService.save(property);
-        return new ResponseEntity<>(property, HttpStatus.CREATED);
+        return new ResponseEntity<>(iPropertyService.save(property), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Property> update(@PathVariable Long id, @RequestBody Property property) {

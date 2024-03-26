@@ -19,7 +19,6 @@ public class LocationController {
     }
     @PostMapping
     public ResponseEntity<Location> save(@RequestBody Location location) {
-        iLocationService.save(location);
-        return new ResponseEntity<>(location, HttpStatus.CREATED);
+        return new ResponseEntity<>(iLocationService.save(location), HttpStatus.CREATED);
     }
 }

@@ -19,7 +19,6 @@ public class CategoryController {
     }
     @PostMapping
     public ResponseEntity<Category> save(@RequestBody Category category) {
-        iCategoryService.save(category);
-        return new ResponseEntity<>(category, HttpStatus.CREATED);
+        return new ResponseEntity<>(iCategoryService.save(category), HttpStatus.CREATED);
     }
 }
