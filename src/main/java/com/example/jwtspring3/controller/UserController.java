@@ -3,7 +3,6 @@ package com.example.jwtspring3.controller;
 import com.example.jwtspring3.model.JwtResponse;
 import com.example.jwtspring3.model.Role;
 import com.example.jwtspring3.model.User;
-import com.example.jwtspring3.repository.UserRepository;
 import com.example.jwtspring3.service.RoleService;
 import com.example.jwtspring3.service.UserService;
 import com.example.jwtspring3.service.impl.JwtService;
@@ -19,9 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
@@ -44,7 +41,7 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<Iterable<User>> showAllUser() {
         Iterable<User> allUsers = userService.findAll();
-            return new ResponseEntity<>(allUsers, HttpStatus.OK);
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
@@ -54,24 +51,24 @@ public class UserController {
     }
 
     @GetMapping("/admin/users")
-    public ResponseEntity<Iterable<User>> showAllUsers(String name, String username, String status, String roleName){
+    public ResponseEntity<Iterable<User>> showAllUsers(String name, String username, String status, String roleName) {
         Iterable<User> users = userService.findAllUser(name, username, status, roleName);
-        return new ResponseEntity<>(users,HttpStatus.OK);
-     }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
     @PostMapping("/register/{roleId}")
-    public ResponseEntity createUser(@RequestBody User user,@PathVariable Long roleId, BindingResult bindingResult) {
+    public ResponseEntity createUser(@RequestBody User user, @PathVariable Long roleId, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Iterable<User> users = userService.findAll();
         for (User currentUser : users) {
             if (currentUser.getUsername().equals(user.getUsername())) {
-                return new ResponseEntity<>("Username existed",HttpStatus.OK);
+                return new ResponseEntity<>("Username existed", HttpStatus.OK);
             }
         }
         if (!userService.isCorrectConfirmPassword(user)) {
-            return new ResponseEntity<>("Input confirm password",HttpStatus.OK);
+            return new ResponseEntity<>("Input confirm password", HttpStatus.OK);
         }
         if (user.getRoles() == null) {
             Role role = roleService.findById(roleId);
@@ -110,4 +107,34 @@ public class UserController {
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PutMapping("/updatePass/{id}")
+    public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody Map<String, String> passwordUpdate) {
+        if (!passwordUpdate.containsKey("oldPassword") || !passwordUpdate.containsKey("newPassword") || !passwordUpdate.containsKey("confirmPassword")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String oldPassword = passwordUpdate.get("oldPassword");
+        String newPassword = passwordUpdate.get("newPassword");
+        String confirmPassword = passwordUpdate.get("confirmPassword");
+        Optional<User> userOptional = userService.findById(id);
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        User user = userOptional.get();
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (newPassword.equals(oldPassword)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userService.save(user);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+
 }
