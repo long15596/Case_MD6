@@ -51,6 +51,7 @@ public class IImageServiceImpl implements IImageService {
 
     @Override
     public void deleteAllByPropertyId(Long id) {
-        imageRepository.deleteAllByPropertyId(id);
+        Iterable<Image> imageIterable = findAllByPropertyId(id);
+        deleteAll(imageIterable);
     }
 }

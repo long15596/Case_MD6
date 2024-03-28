@@ -32,4 +32,9 @@ public class ImageController {
         iImageService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @DeleteMapping
+    public ResponseEntity deleteAllByPropertyId(Long propertyId) {
+        iImageService.deleteAllByPropertyId(propertyId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
