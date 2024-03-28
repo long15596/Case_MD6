@@ -32,7 +32,7 @@ public class PropertyServiceImpl implements IPropertyService {
         return propertyRepository.findAll();
     }
     @Override
-    public Iterable<Property> findAll(String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
+    public Iterable<Property> findAll(Long userId, String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
         if (name != null &&  categoryName != null && locationName != null) {
             return propertyRepository.findByNameContainingAndCategoryNameAndLocationName(name, categoryName, locationName);
         } else if (name != null && categoryName != null) {
