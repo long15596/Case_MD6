@@ -19,6 +19,8 @@ public class Property {
     private Long kitchen;
     private Long successRental;
     @Column(length = 1000)
+    private String avatar;
+    @Column(length = 1000)
     private String information;
     @ManyToOne
     private Category category;
