@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
-    Iterable<Property> findAllByUserId(Long id);
+    Iterable<Property> findAllByUserId(Long id );
     Iterable<Property> findAllByNameContaining(String name);
     Iterable<Property> findAllByNameContainingAndUserId(String name, Long id);
     Iterable<Property> findAllByCategoryName(String name);

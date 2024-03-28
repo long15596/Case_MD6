@@ -17,6 +17,10 @@ public class PropertyController {
     public ResponseEntity<Iterable<Property>> findAll(Long userId, String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
         return new ResponseEntity<>(iPropertyService.findAll(userId, name, categoryName, locationName, priceStart, priceEnd, bedroomStar, bedroomEnd, bathroomStart, bathroomEnd, livingRoomStart, livingRoomEnd), HttpStatus.OK);
     }
+    @GetMapping("/owners/{id}")
+    public ResponseEntity<Iterable<Property>> findPropertyByUser(@PathVariable Long id , String name, String categoryName, String locationName){
+        return new ResponseEntity<>(iPropertyService.findAllPropertyByOwner(id,name,categoryName,locationName),HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<Property> save(@RequestBody Property property) {
         return new ResponseEntity<>(iPropertyService.save(property), HttpStatus.CREATED);

@@ -15,9 +15,10 @@ public class PropertyServiceImpl implements IPropertyService {
     PropertyRepository propertyRepository;
     @Autowired
     IImageServiceImpl iImageService;
+
     @Override
     public Property save(Property object) {
-       return propertyRepository.save(object);
+        return propertyRepository.save(object);
     }
 
     @Override
@@ -31,9 +32,10 @@ public class PropertyServiceImpl implements IPropertyService {
     public Iterable<Property> findAll() {
         return propertyRepository.findAll();
     }
+
     @Override
-    public Iterable<Property> findAll(Long userId, String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
-        if (name != null &&  categoryName != null && locationName != null) {
+    public Iterable<Property> findAll(String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
+        if (name != null && categoryName != null && locationName != null) {
             return propertyRepository.findByNameContainingAndCategoryNameAndLocationName(name, categoryName, locationName);
         } else if (name != null && categoryName != null) {
             return propertyRepository.findByNameContainingAndCategoryName(name, categoryName);
@@ -58,10 +60,27 @@ public class PropertyServiceImpl implements IPropertyService {
         }
         return propertyRepository.findAll();
     }
+
+    @Override
+    public Iterable<Property> findAllPropertyByOwner(Long id, String name, String categoryName, String locationName) {
+        if (name != null && categoryName != null) {
+            return propertyRepository.findByNameContainingAndCategoryName(name, categoryName);
+        } else if (name != null && locationName != null) {
+            return propertyRepository.findByNameContainingAndLocationName(name, locationName);
+        } else if (categoryName != null && locationName != null) {
+            return propertyRepository.findByCategoryNameAndLocationName(categoryName, locationName);
+        } else if (name != null) {
+            return propertyRepository.findAllByNameContainingAndUserId(name, id);
+        } else if (categoryName != null) {
+            return propertyRepository.findAllByCategoryName(categoryName);
+        } else if (locationName != null) {
+            return propertyRepository.findAllByLocationName(locationName);
+        }
+        return propertyRepository.findAllByUserId(id);
+    }
+
     @Override
     public Optional<Property> findById(Long id) {
         return propertyRepository.findById(id);
     }
-
-
 }
