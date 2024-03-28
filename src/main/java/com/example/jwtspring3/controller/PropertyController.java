@@ -14,8 +14,8 @@ public class PropertyController {
     @Autowired
     IPropertyService iPropertyService;
     @GetMapping
-    public ResponseEntity<Iterable<Property>> findAll(Long userId, String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
-        return new ResponseEntity<>(iPropertyService.findAll(userId, name, categoryName, locationName, priceStart, priceEnd, bedroomStar, bedroomEnd, bathroomStart, bathroomEnd, livingRoomStart, livingRoomEnd), HttpStatus.OK);
+    public ResponseEntity<Iterable<Property>> findAll(String name, String categoryName, String locationName, Long priceStart, Long priceEnd, Long bedroomStar, Long bedroomEnd, Long bathroomStart, Long bathroomEnd, Long livingRoomStart, Long livingRoomEnd) {
+        return new ResponseEntity<>(iPropertyService.findAll(name, categoryName, locationName, priceStart, priceEnd, bedroomStar, bedroomEnd, bathroomStart, bathroomEnd, livingRoomStart, livingRoomEnd), HttpStatus.OK);
     }
     @GetMapping("/owners/{id}")
     public ResponseEntity<Iterable<Property>> findPropertyByUser(@PathVariable Long id , String name, String categoryName, String locationName){
